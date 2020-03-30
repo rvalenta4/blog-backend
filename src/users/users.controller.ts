@@ -1,38 +1,20 @@
-import { Controller, Post, Body, Patch, Get, Param } from '@nestjs/common'
-import { UserDto } from './entities/user.dto'
-import { UserLoginApiEntity } from './entities/user.login.api.entity'
-import { v1 as uuidv1 } from 'uuid'
+import { Controller, Post, Body } from '@nestjs/common'
+import { UserDto } from './user.dto'
+import { UserLoginDto } from './user.login.dto'
+import { User } from './user.entity'
+import { UsersService } from './users.service'
 
 @Controller('users')
 export class UsersController {
-	users = [
-		{
-			id: uuidv1(),
-			name: 'User 1',
-			surname: 'User 1',
-			email: 'email@example.com',
-			username: 'user1',
-			password: 'password1234'
-		}
-	]
-
-	@Get()
-	getAllUsers() {
-		return this.users
-	}
-
-	@Get(':id')
-	getUser(@Param('id') id) {
-		return this.users.find(user => user.id === id)
-	}
+	constructor(private readonly usersService: UsersService) {}
 
 	@Post('create')
-	createUser(@Body() user: UserDto): UserDto {
-		return user
+	async createUser(@Body() user: UserDto): Promise<UserDto> {
+		return await this.usersService.createUser(user)
 	}
 
 	@Post('login')
-	loginUser(@Body() user: UserLoginApiEntity) {
-		console.log(user)
+	async logUserIn(@Body() user: UserLoginDto): Promise<User> {
+		return await this.usersService.logUserIn(user)
 	}
 }

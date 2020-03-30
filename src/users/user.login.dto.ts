@@ -1,4 +1,4 @@
-export interface UserDto {
+export class UserLoginDto {
 	name: string
 	surname: string
 	email: string
