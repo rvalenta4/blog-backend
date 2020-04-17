@@ -9,8 +9,3 @@ services:
             POSTGRES_PASSWORD: password
         ports:
             - 5433:5432 # avoid collision with local install
-    adminer:
-        image: adminer
-        restart: always
-        ports:
-            - 8080:8080
