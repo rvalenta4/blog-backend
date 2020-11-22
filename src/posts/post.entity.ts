@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
+import { User } from 'src/users/user.entity'
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from 'typeorm'
 
 @Entity()
 export class Post {
@@ -10,4 +11,8 @@ export class Post {
 
 	@Column()
 	body: string
+
+	@ManyToMany(() => User)
+	@JoinTable()
+	user: User[]
 }
